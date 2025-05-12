@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0
  */
 
-import { ConflictException, Injectable, Logger, NotFoundException } from '@nestjs/common'
+import { ConflictException, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { ApiKey } from './api-key.entity'
@@ -112,7 +112,7 @@ export class ApiKeyService {
     })
 
     if (!apiKey) {
-      throw new NotFoundException('API key not found')
+      throw new UnauthorizedException('Unauthorized')
     }
 
     const organizationUser = await this.organizationUserService.findOne(apiKey.organizationId, apiKey.userId)
