@@ -47,3 +47,12 @@ func (s *Service) ListBranches() ([]string, error) {
 
 	return branchList, err
 }
+
+func (s *Service) DeleteBranch(name string) error {
+	repo, err := git.PlainOpen(s.ProjectDir)
+	if err != nil {
+		return err
+	}
+
+	return repo.DeleteBranch(name)
+}
